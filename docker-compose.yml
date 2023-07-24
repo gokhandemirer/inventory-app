@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  db:
+    image: 'mysql:8.0'
+    ports:
+      - '${MYSQL_PORT}:${MYSQL_PORT}'
+    restart: always
+    environment:
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_ROOT_PASSWORD: '${MYSQL_PASSWORD}'
+  app:
+    platform: "linux/amd64"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_CLIENTVAR: "clientvar"
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    image: t3-app
+    environment:
+      - DATABASE_URL=database_url_goes_here
