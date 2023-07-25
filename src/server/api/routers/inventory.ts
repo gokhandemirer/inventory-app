@@ -5,7 +5,7 @@ import {
     publicProcedure,
     protectedProcedure,
   } from "@/server/api/trpc";
-import { createInventorySchema } from "../schemas";
+import { createInventorySchema, deleteInventorySchema } from "../schemas";
 
 export const inventoryRouter = createTRPCRouter({
 	getAll: publicProcedure.query(async ({ ctx }) => {
@@ -15,6 +15,26 @@ export const inventoryRouter = createTRPCRouter({
 			},
 		});
 	}),
+	delete: publicProcedure
+		.input(deleteInventorySchema)
+		.mutation(async ({ ctx, input }) => {
+			const { id } = input;
+			
+			try {
+				const inventory = await ctx.prisma.inventory.delete({
+					where: {
+						id,
+					},
+				});
+
+				return inventory;
+			} catch (e) {
+				throw new TRPCError({
+					code: 'INTERNAL_SERVER_ERROR',
+					message: 'Something went wrong',
+				});
+			}
+		}),
     create: publicProcedure
 		.input(createInventorySchema)
 		.mutation(async ({ ctx, input }) => {

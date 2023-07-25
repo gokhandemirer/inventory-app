@@ -34,4 +34,8 @@ export const createInventorySchema = z.object({
 		),
 });
 
+export const deleteInventorySchema = z.object({
+	id: z.string(),
+});
+
 export type CreateInventoryInput = z.TypeOf<typeof createInventorySchema>;
