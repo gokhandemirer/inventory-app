@@ -7,7 +7,7 @@ interface InventoryFormProps {
 	onAddInventory: (
 		name: string,
 		quantity: number,
-		categoryName: string,
+		categoryName: string
 	) => Promise<void>;
 	categories: string[];
 	status: Status;
@@ -27,27 +27,35 @@ const InventoryForm = ({
 	}
 
 	const handleInventoryNameChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
+		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		setInventoryName(e.target.value);
 	};
 
 	const handleCategoryNameChange = (
-		e: React.ChangeEvent<HTMLSelectElement>,
+		e: React.ChangeEvent<HTMLSelectElement>
 	) => {
 		setCategoryName(e.target.value);
 	};
 
 	const handleInventoryQuantityChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
+		e: React.ChangeEvent<HTMLInputElement>
 	) => {
 		setInventoryQuantity(Number(e.target.value));
+	};
+
+	const resetForm = () => {
+		setInventoryName('');
+		setInventoryQuantity(0);
+		setCategoryName(categories?.[0] ?? '');
 	};
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
 
 		void onAddInventory(inventoryName, inventoryQuantity, categoryName);
+
+		resetForm();
 	};
 
 	return (
