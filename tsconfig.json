@@ -25,14 +25,12 @@
 			"@routers/*": ["./src/server/router/s*"],
 			"@utils": ["./src/utils"],
 			"@utils/*": ["./src/utils/*"]
-		},
-		"types": ["vitest/globals"]
+		}
 	},
 	"include": [
 		".eslintrc.cjs",
 		"next-env.d.ts",
 		"setupTests.ts",
-		"vitest.config.ts",
 		"**/*.ts",
 		"**/*.tsx",
 		"**/*.cjs",
