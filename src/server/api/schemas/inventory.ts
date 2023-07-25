@@ -33,3 +33,5 @@ export const createInventorySchema = z.object({
 			getMaxLengthErrorMessage(Inventory.MaxNameLength, 'Category name'),
 		),
 });
+
+export type CreateInventoryInput = z.TypeOf<typeof createInventorySchema>;
