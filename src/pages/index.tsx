@@ -1,26 +1,24 @@
-import { useState } from "react";
-import Head from "next/head";
-import { api } from "@/utils/api";
-import InventoryForm from "@/feature/Inventory/InventoryForm";
-import type { Status } from "@/components/UI/InputWithLabel";
+import { useState } from 'react';
+import Head from 'next/head';
+import { api } from '@/utils/api';
+import InventoryForm from '@/feature/Inventory/InventoryForm';
+import type { Status } from '@/components/UI/InputWithLabel';
 import toast from 'react-hot-toast';
-import InventoryTable from "@/feature/Inventory/InventoryTable";
+import InventoryTable from '@/feature/Inventory/InventoryTable';
+import InventoryEditModal from '@/feature/Inventory/InventoryEditModal';
 
 export default function Home() {
-  const utils = api.useContext();
-  const [status, setStatus] = useState<Status>();
-  const [categoryNames, setCategoryNames] = useState<string[]>([
-    "Games",
-    "Books",
-    "Movies",
-  ]);
+	const [status, setStatus] = useState<Status>();
+	const [showModal, setShowModal] = useState<boolean>(false);
+	const [inventoryId, setInventoryId] = useState<string>('');
+	const [categoryNames] = useState<string[]>(['Games', 'Books', 'Movies']);
 
-  const successNotify = (message: string) => toast.success(message);
+	const successNotify = (message: string) => toast.success(message);
 	const errorNotify = (error: string) => toast.error(error);
 
-  const { data: inventories, refetch } = api.inventory.getAll.useQuery();
+	const { data: inventories, refetch } = api.inventory.getAll.useQuery();
 
-  const { mutateAsync: addInventory } = api.inventory.create.useMutation({
+	const { mutateAsync: addInventory } = api.inventory.create.useMutation({
 		onError(error) {
 			setStatus('error');
 
@@ -43,35 +41,73 @@ export default function Home() {
 
 		async onSuccess({ name }) {
 			successNotify(`${name} added to inventory`);
-      refetch();
+			refetch();
 		},
 	});
 
-  const handleAddInventory = async (
-    name: string,
-    quantity: number,
-    categoryName: string
-  ) => {
-    await addInventory({
+	const handleAddInventory = async (
+		name: string,
+		quantity: number,
+		categoryName: string
+	) => {
+		await addInventory({
 			name,
 			quantity,
 			categoryName,
 		});
-  }
-  
-  return (
-    <>
-      <Head>
-        <title>Inventory App</title>
-      </Head>
-      <div className="2xl:container 2xl:mx-auto">
-        <InventoryForm
-          onAddInventory={handleAddInventory}
-          categories={categoryNames}
-          status={status}
-        />
-        {inventories && <InventoryTable data={inventories} />}
-      </div>
-    </>
-  );
+	};
+
+	const { mutateAsync: deleteInventory } = api.inventory.delete.useMutation({
+		onError(error) {
+			setStatus('error');
+			errorNotify(error.message);
+		},
+
+		async onSuccess() {
+			successNotify('Deleted inventory');
+			refetch();
+		},
+	});
+
+	const handleDeleteInventory = async (id: string) => {
+		await deleteInventory({ id });
+	};
+
+	const handleEditInventory = async (id: string) => {
+		setInventoryId(id);
+		setShowModal(true);
+	};
+
+	const handleToggleModal = () => {
+		setShowModal(!showModal);
+	};
+
+	return (
+		<>
+			<Head>
+				<title>Inventory App</title>
+			</Head>
+			<div className='2xl:container 2xl:mx-auto'>
+				<InventoryForm
+					onAddInventory={handleAddInventory}
+					categories={categoryNames}
+					status={status}
+				/>
+				{inventories && (
+					<InventoryTable
+						data={inventories}
+						onDeleteRow={handleDeleteInventory}
+						onEditRow={handleEditInventory}
+					/>
+				)}
+				<InventoryEditModal
+					isOpen={showModal}
+					inventoryId={inventoryId}
+					handleToggleModal={handleToggleModal}
+					categories={categoryNames}
+					status={status}
+				/>
+			</div>
+		</>
+	);
 }
