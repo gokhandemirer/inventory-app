@@ -8,6 +8,13 @@ import {
 import { createInventorySchema } from "../schemas";
 
 export const inventoryRouter = createTRPCRouter({
+	getAll: publicProcedure.query(async ({ ctx }) => {
+		return await ctx.prisma.inventory.findMany({
+			orderBy: {
+				updatedAt: 'desc',
+			},
+		});
+	}),
     create: publicProcedure
 		.input(createInventorySchema)
 		.mutation(async ({ ctx, input }) => {
