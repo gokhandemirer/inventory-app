@@ -4,6 +4,7 @@ import { api } from "@/utils/api";
 import InventoryForm from "@/feature/Inventory/InventoryForm";
 import type { Status } from "@/components/UI/InputWithLabel";
 import toast from 'react-hot-toast';
+import InventoryTable from "@/feature/Inventory/InventoryTable";
 
 export default function Home() {
   const utils = api.useContext();
@@ -16,6 +17,8 @@ export default function Home() {
 
   const successNotify = (message: string) => toast.success(message);
 	const errorNotify = (error: string) => toast.error(error);
+
+  const { data: inventories, refetch } = api.inventory.getAll.useQuery();
 
   const { mutateAsync: addInventory } = api.inventory.create.useMutation({
 		onError(error) {
@@ -40,6 +43,7 @@ export default function Home() {
 
 		async onSuccess({ name }) {
 			successNotify(`${name} added to inventory`);
+      refetch();
 		},
 	});
 
@@ -66,6 +70,7 @@ export default function Home() {
           categories={categoryNames}
           status={status}
         />
+        {inventories && <InventoryTable data={inventories} />}
       </div>
     </>
   );
