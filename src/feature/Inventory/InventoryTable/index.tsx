@@ -19,10 +19,23 @@ const columns: ColumnDef<Inventory>[] = [
 
 interface InventoryTableProps {
 	data: Inventory[];
+	onDeleteRow: (id: string) => Promise<void>;
+	onEditRow: (id: string) => Promise<void>;
 }
 
-const InventoryTable = ({ data }: InventoryTableProps) => {
-	return <Table data={data} columns={columns} />;
+const InventoryTable = ({
+	data,
+	onDeleteRow,
+	onEditRow,
+}: InventoryTableProps) => {
+	return (
+		<Table
+			data={data}
+			columns={columns}
+			onDeleteRow={onDeleteRow}
+			onEditRow={onEditRow}
+		/>
+	);
 };
 
 export default InventoryTable;
