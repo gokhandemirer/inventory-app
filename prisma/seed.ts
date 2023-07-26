@@ -18,7 +18,7 @@ async function main() {
 			update: {},
 			create: {
 				...rest,
-				categoryName
+				categoryName,
 			},
 		});
 		console.log(`Created inventory with name: ${inventory.name}`);
@@ -32,8 +32,6 @@ main()
 		await prisma.$disconnect();
 	})
 	.catch(async (e) => {
-		console.log("gokhan error");
-		
 		console.error(e);
 		await prisma.$disconnect();
 		process.exit(1);
