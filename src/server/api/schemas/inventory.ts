@@ -1,5 +1,9 @@
 import { getMaxLengthErrorMessage, getMinLengthErrorMessage } from '@/utils';
-import { startsWithLetterRegex, startsWithLetterRegexErrorMessage, Inventory } from 'src/contants';
+import {
+	startsWithLetterRegex,
+	startsWithLetterRegexErrorMessage,
+	Inventory,
+} from 'src/contants';
 
 import z from 'zod';
 
@@ -12,11 +16,11 @@ export const createInventorySchema = z.object({
 		.min(0, getMinLengthErrorMessage(0, 'Name'))
 		.min(
 			Inventory.MinNameLength,
-			getMinLengthErrorMessage(Inventory.MinNameLength, 'Name'),
+			getMinLengthErrorMessage(Inventory.MinNameLength, 'Name')
 		)
 		.max(
 			Inventory.MaxNameLength,
-			getMaxLengthErrorMessage(Inventory.MaxNameLength, 'Name'),
+			getMaxLengthErrorMessage(Inventory.MaxNameLength, 'Name')
 		),
 	quantity: z.number().min(Inventory.MinQuantity).max(Inventory.MaxQuantity),
 	categoryName: z
@@ -26,15 +30,19 @@ export const createInventorySchema = z.object({
 		.min(0, getMinLengthErrorMessage(0, 'Category name'))
 		.min(
 			Inventory.MinNameLength,
-			getMinLengthErrorMessage(Inventory.MinNameLength, 'Category name'),
+			getMinLengthErrorMessage(Inventory.MinNameLength, 'Category name')
 		)
 		.max(
 			Inventory.MaxNameLength,
-			getMaxLengthErrorMessage(Inventory.MaxNameLength, 'Category name'),
+			getMaxLengthErrorMessage(Inventory.MaxNameLength, 'Category name')
 		),
 });
 
 export const deleteInventorySchema = z.object({
+	id: z.string(),
+});
+
+export const getProductByIdSchema = z.object({
 	id: z.string(),
 });
 
