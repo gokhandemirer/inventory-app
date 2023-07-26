@@ -1,28 +1,101 @@
-# Create T3 App
+# Inventory App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Inventory app that will help us manage our inventory.
+The Inventory App is a web-based application that allows businesses to manage their inventory. The application provides a user-friendly interface to manage inventory and track sales.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+-   Add, edit, and delete inventories
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+-   [Next.js - React framework](https://nextjs.org)
+-   [tRPC - End-to-end typesafe API](https://trpc.io)
+-   [Zod - TypeScript-first schema validation](https://zod.dev)
+-   [Tailwind CSS](https://tailwindcss.com)
+-   [TypeScript](https://typescriptlang.org)
+-   [Prisma - ORM](https://prisma.io)
 
-## Learn More
+## Installation
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+1. Clone the repository:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+git clone https://github.com/hiring11/FrontendDevelopment-GokhanD.git
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+2. Install the required packages:
 
-## How do I deploy this?
+```bash
+cd inventory-app
+yarn
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+3. Set the environment variables:
+
+Create a `.env` file in the root directory based on `.env.example` file.
+
+4. Start Docker Daemon:
+
+Open [Docker desktop](https://www.docker.com/products/docker-desktop/).
+
+5. Run the application:
+
+```bash
+yarn start:dev
+```
+
+The application will be available at http://localhost:3000.
+
+## Usage
+
+To use the application, open your web browser and navigate to http://localhost:3000.
+After that, you can add, edit, and delete your inventories.
+
+## Scripts
+
+-   **Run project in development mode**
+
+```bash
+yarn start:dev
+```
+
+-   **Run project in development mode (with docker-compose)**
+
+```bash
+yarn start:dev:docker
+```
+
+-   **Run project in production mode**
+
+```bash
+yarn start:prod
+```
+
+-   **Run project in production mode (with docker-compose)**
+
+```bash
+yarn start:prod:docker
+```
+
+## Pipeline
+
+The application is deployed to Vercel automatically when a pull request is merged to the `main` branch.
+
+## Tests
+
+The application is tested automatically using [Vitest](https://vitest.dev).
+To run the tests, run the following command:
+
+```bash
+yarn test
+```
+
+## Contributing
+
+If you would like to contribute to the Inventory App project, please fork the repository and submit a pull request.
+Before submitting a pull request, please make sure to run the tests and ensure that they pass.
+
+## License
+
+The Inventory App is released under the [MIT License](https://opensource.org/license/mit/).
