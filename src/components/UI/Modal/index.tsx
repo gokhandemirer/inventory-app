@@ -5,11 +5,10 @@ type Props = {
 	toggleModal: () => void;
 	title: string;
 	children?: any;
-	firstButtonAction: () => void;
 };
 
 const Modal = (props: Props) => {
-	const { isOpen, title, children, toggleModal, firstButtonAction } = props;
+	const { isOpen, title, children, toggleModal } = props;
 
 	return isOpen ? (
 		<>
@@ -43,13 +42,6 @@ const Modal = (props: Props) => {
 								onClick={() => toggleModal()}
 							>
 								Close
-							</button>
-							<button
-								className='mb-1 mr-1 rounded bg-emerald-500 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-lg focus:outline-none active:bg-emerald-600'
-								type='button'
-								onClick={firstButtonAction}
-							>
-								Save
 							</button>
 						</div>
 					</div>
