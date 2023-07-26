@@ -78,6 +78,32 @@ export default function Home() {
 		setShowModal(true);
 	};
 
+	const { mutateAsync: updateInventory } = api.inventory.update.useMutation({
+		onError(error) {
+			setStatus('error');
+			errorNotify(error.message);
+		},
+
+		async onSuccess() {
+			successNotify('Updated inventory');
+			refetch();
+			handleToggleModal();
+		},
+	});
+
+	const handleUpdateInventory = async (
+		name: string,
+		quantity: number,
+		categoryName: string
+	) => {
+		await updateInventory({
+			id: inventoryId,
+			name,
+			quantity,
+			categoryName,
+		});
+	};
+
 	const handleToggleModal = () => {
 		setShowModal(!showModal);
 	};
@@ -104,6 +130,7 @@ export default function Home() {
 					isOpen={showModal}
 					inventoryId={inventoryId}
 					handleToggleModal={handleToggleModal}
+					onUpdateInventory={handleUpdateInventory}
 					categories={categoryNames}
 					status={status}
 				/>
