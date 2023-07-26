@@ -78,10 +78,6 @@ yarn start:prod
 yarn start:prod:docker
 ```
 
-## Pipeline
-
-The application is deployed to Vercel automatically when a pull request is merged to the `main` branch.
-
 ## Tests
 
 The application is tested automatically using [Vitest](https://vitest.dev).
