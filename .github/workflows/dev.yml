@@ -1,0 +1,69 @@
+name: Dev Pipeline
+on:
+    push:
+        branches:
+            - 'feat/**'
+            - 'fix/**'
+            - 'docs/**'
+            - 'style/**'
+            - 'refactor/**'
+            - 'chore/**'
+            - 'revert/**'
+            - 'perf/**'
+            - 'ci/**'
+    pull_request:
+        types: [opened, reopened, synchronize]
+        branches:
+            - 'feat/**'
+            - 'fix/**'
+            - 'docs/**'
+            - 'style/**'
+            - 'refactor/**'
+            - 'chore/**'
+            - 'revert/**'
+            - 'perf/**'
+            - 'ci/**'
+
+env:
+    SKIP_ENV_VALIDATION: true
+    DATABASE_URL: ${{ vars.DATABASE_URL }}
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        container: node:19.7
+
+        services:
+            db:
+                image: mysql:8.0
+                env:
+                    MYSQL_DATABASE: ${{ vars.MYSQL_DATABASE }}
+                    MYSQL_ROOT_PASSWORD: ${{ vars.MYSQL_ROOT_PASSWORD }}
+                    MYSQL_PASSWORD: ${{ vars.MYSQL_PASSWORD }}
+                ports:
+                    - ${{ vars.MYSQL_PORT }}:${{ vars.MYSQL_PORT }}
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - name: Cache Dependencies
+              uses: c-hive/gha-yarn-cache@v2
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
+
+            - name: Format Check
+              run: yarn format
+
+            - name: Lint Check
+              run: yarn lint
+
+            - name: Type Check
+              run: yarn check-types
+
+            - name: Prepare Database
+              run: yarn db:prepare
+
+            - name: Run unit tests
+              run: yarn test:ci
