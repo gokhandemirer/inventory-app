@@ -21,7 +21,7 @@ The Inventory App is a web-based application that allows businesses to manage th
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/hiring11/FrontendDevelopment-GokhanD.git
+git clone https://github.com/hiring11/FrontendDevelopment-GokhanD.git inventory-app
 ```
 
 2. Install the required packages:
