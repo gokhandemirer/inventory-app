@@ -9,10 +9,10 @@
 		"lint": "next lint",
 		"start": "next start",
 		"wait:db": "wait-port localhost:3306",
-		"start:db": "docker compose up -d db && yarn wait:db && yarn db:migrate:dev && yarn db-seed",
+		"start:db": "docker compose --env-file .env up -d db && yarn wait:db && yarn db:migrate:dev && yarn db-seed",
 		"start:dev": "yarn start:db && yarn dev",
 		"start:prod": "yarn build && yarn start:db && yarn start",
-		"start:prod:docker": "docker compose up -d && yarn wait:db && yarn db:migrate:dev",
+		"start:prod:docker": "docker compose --env-file .env up -d && yarn wait:db && yarn db:migrate:dev",
 		"db-seed": "NODE_ENV=development prisma db seed",
 		"db:migrate:dev": "prisma migrate dev --name mysql-init",
 		"db:migrate:prod": "prisma migrate deploy",
@@ -64,7 +64,8 @@
 		"prisma": "^5.0.0",
 		"tailwindcss": "^3.3.0",
 		"typescript": "^5.0.4",
-		"vitest": "^0.33.0"
+		"vitest": "^0.33.0",
+		"wait-port": "1.0.4"
 	},
 	"ct3aMetadata": {
 		"initVersion": "7.16.0"
