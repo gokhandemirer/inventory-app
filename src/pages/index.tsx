@@ -41,7 +41,7 @@ export default function Home() {
 
 		async onSuccess({ name }) {
 			successNotify(`${name} added to inventory`);
-			refetch();
+			await refetch();
 		},
 	});
 
@@ -65,7 +65,7 @@ export default function Home() {
 
 		async onSuccess() {
 			successNotify('Deleted inventory');
-			refetch();
+			await refetch();
 		},
 	});
 
@@ -73,7 +73,7 @@ export default function Home() {
 		await deleteInventory({ id });
 	};
 
-	const handleEditInventory = async (id: string) => {
+	const handleEditInventory = (id: string) => {
 		setInventoryId(id);
 		setShowModal(true);
 	};
@@ -86,7 +86,7 @@ export default function Home() {
 
 		async onSuccess() {
 			successNotify('Updated inventory');
-			refetch();
+			await refetch();
 			handleToggleModal();
 		},
 	});

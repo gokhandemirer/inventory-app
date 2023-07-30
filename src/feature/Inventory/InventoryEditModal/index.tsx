@@ -1,9 +1,9 @@
 import { api } from '@/utils/api';
 import Modal from '@/components/UI/Modal';
 import InventoryEditForm from '../InventoryEditForm';
-import { Status } from '@/components/UI/InputWithLabel';
+import { type Status } from '@/components/UI/InputWithLabel';
 
-type Props = {
+interface Props {
 	inventoryId: string;
 	isOpen: boolean;
 	categories: string[];
@@ -14,7 +14,7 @@ type Props = {
 		quantity: number,
 		categoryName: string
 	) => Promise<void>;
-};
+}
 
 const InventoryEditModal = (props: Props) => {
 	const {
@@ -46,7 +46,7 @@ const InventoryEditModal = (props: Props) => {
 		quantity: number,
 		categoryName: string
 	) => {
-		void onUpdateInventory(name, quantity, categoryName);
+		void (await onUpdateInventory(name, quantity, categoryName));
 	};
 
 	return (
@@ -54,15 +54,14 @@ const InventoryEditModal = (props: Props) => {
 			isOpen={isOpen}
 			toggleModal={handleToggleModal}
 			title='Edit Inventory'
-			children={
-				<InventoryEditForm
-					categories={categories}
-					status={status}
-					inventory={inventory}
-					onUpdateInventory={handleUpdateInventory}
-				/>
-			}
-		/>
+		>
+			<InventoryEditForm
+				categories={categories}
+				status={status}
+				inventory={inventory}
+				onUpdateInventory={handleUpdateInventory}
+			/>
+		</Modal>
 	);
 };
 

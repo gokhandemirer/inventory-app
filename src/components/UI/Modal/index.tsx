@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { type ReactNode } from 'react';
 
-type Props = {
+interface Props {
 	isOpen: boolean;
 	toggleModal: () => void;
 	title: string;
-	children?: any;
-};
+	children: ReactNode;
+}
 
 const Modal = (props: Props) => {
 	const { isOpen, title, children, toggleModal } = props;

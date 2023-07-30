@@ -20,7 +20,7 @@ const columns: ColumnDef<Inventory>[] = [
 interface InventoryTableProps {
 	data: Inventory[];
 	onDeleteRow: (id: string) => Promise<void>;
-	onEditRow: (id: string) => Promise<void>;
+	onEditRow: (id: string) => void;
 }
 
 const InventoryTable = ({

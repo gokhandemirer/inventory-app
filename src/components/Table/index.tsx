@@ -4,20 +4,22 @@ import {
 	getCoreRowModel,
 	getPaginationRowModel,
 	useReactTable,
+	type CoreRow,
 } from '@tanstack/react-table';
 
 interface TableProps<T extends object> {
 	data: T[];
 	columns: ColumnDef<T>[];
-	onDeleteRow: (
-		id: string,
-	) => Promise<void>;
-	onEditRow: (
-		id: string,
-	) => Promise<void>;
+	onDeleteRow: (id: string) => Promise<void>;
+	onEditRow: (id: string) => void;
 }
 
-const Table = <T extends object>({ data, columns, onDeleteRow, onEditRow }: TableProps<T>) => {
+const Table = <T extends object>({
+	data,
+	columns,
+	onDeleteRow,
+	onEditRow,
+}: TableProps<T>) => {
 	const table = useReactTable({
 		data,
 		columns,
@@ -40,13 +42,13 @@ const Table = <T extends object>({ data, columns, onDeleteRow, onEditRow }: Tabl
 		if (onDeleteRow) {
 			void onDeleteRow(id);
 		}
-	}
+	};
 
 	const handleEditRow = (id: string) => {
 		if (onEditRow) {
 			void onEditRow(id);
 		}
-	}
+	};
 
 	return (
 		<>
@@ -67,16 +69,16 @@ const Table = <T extends object>({ data, columns, onDeleteRow, onEditRow }: Tabl
 												: flexRender(
 														header.column.columnDef
 															.header,
-														header.getContext(),
+														header.getContext()
 												  )}
 										</th>
 									))}
-										<th
-											scope='col'
-											className='border-b border-gray-200  px-5 py-3 text-left text-sm text-gray-800 text-center'
-										>
-											Action
-										</th>
+									<th
+										scope='col'
+										className='border-b border-gray-200  px-5 py-3 text-left text-center text-sm text-gray-800'
+									>
+										Action
+									</th>
 								</tr>
 							))}
 						</thead>
@@ -93,24 +95,34 @@ const Table = <T extends object>({ data, columns, onDeleteRow, onEditRow }: Tabl
 										>
 											{flexRender(
 												cell.column.columnDef.cell,
-												cell.getContext(),
+												cell.getContext()
 											)}
 										</td>
 									))}
-										<td className='border-b border-gray-200 p-5 text-sm flex flex-col items-center gap-2'>
-											<button 
-												className="bg-red-500 text-white py-2 px-4 rounded"
-												onClick={() => { handleDeleteRow(row.original.id) }}
-											>
-												Delete
-											</button>
-											<button 
-												className="bg-gray-500 text-white py-2 px-4 rounded"
-												onClick={() => { handleEditRow(row.original.id) }}
-											>
-												Edit
-											</button>
-										</td>
+									<td className='flex flex-col items-center gap-2 border-b border-gray-200 p-5 text-sm'>
+										<button
+											className='rounded bg-red-500 px-4 py-2 text-white'
+											onClick={() => {
+												handleDeleteRow(
+													(row.original as CoreRow<T>)
+														.id
+												);
+											}}
+										>
+											Delete
+										</button>
+										<button
+											className='rounded bg-gray-500 px-4 py-2 text-white'
+											onClick={() => {
+												handleEditRow(
+													(row.original as CoreRow<T>)
+														.id
+												);
+											}}
+										>
+											Edit
+										</button>
+									</td>
 								</tr>
 							))}
 						</tbody>
