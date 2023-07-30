@@ -1,10 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import {
-	createTRPCRouter,
-	publicProcedure,
-	protectedProcedure,
-} from '@/server/api/trpc';
+import { createTRPCRouter, publicProcedure } from '@/server/api/trpc';
 import {
 	createInventorySchema,
 	deleteInventorySchema,
