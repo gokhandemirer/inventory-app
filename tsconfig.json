@@ -25,7 +25,8 @@
 			"@routers/*": ["./src/server/router/s*"],
 			"@utils": ["./src/utils"],
 			"@utils/*": ["./src/utils/*"]
-		}
+		},
+		"types": ["vitest/globals"]
 	},
 	"include": [
 		".eslintrc.cjs",
